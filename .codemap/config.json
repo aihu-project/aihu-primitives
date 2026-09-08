@@ -1,0 +1,16 @@
+{
+  "only": ["ts", "json", "yml", "md"],
+  "exclude": ["dist", "coverage", "node_modules", ".github"],
+  "depth": 4,
+  "routing": {
+    "subsystems": [
+      {
+        "name": "primitive-behavior",
+        "paths": ["src", "tests"],
+        "keywords": ["define", "aria", "ShadowRoot", "customElements"],
+        "docs": ["README.md"],
+        "note": "The package's behavior is split across colocated primitive entries and shared DOM/context substrates; import edges alone do not show which entry owns the public custom-element contract."
+      }
+    ]
+  }
+}

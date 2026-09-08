@@ -48,7 +48,7 @@ npm install @aihu/primitives
 bun add @aihu/primitives
 ```
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: install -->
 
@@ -59,12 +59,12 @@ bun add @aihu/primitives
 
 | | |
 |---|---|
-| **Version** | `0.2.3` |
+| **Version** | `0.2.4` |
 | **Tier** | F — UI — headless WAI-ARIA APG behavior primitives (zero CSS) |
 | **Published files** | 3 entries |
 | **License** | MIT |
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: stats -->
 
@@ -96,7 +96,7 @@ bun add @aihu/primitives
 | `./slider` | `./dist/slider.js` | `—` |
 | `./popover` | `./dist/popover.js` | `—` |
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: exports -->
 
@@ -110,7 +110,7 @@ bun add @aihu/primitives
 - `@aihu/signals` — `^0.5.1`
 - `@aihu/arbor` — `^4.1.2`
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: deps -->
 
@@ -119,11 +119,11 @@ bun add @aihu/primitives
 <!-- BEGIN_AUTOGEN: see-also -->
 <!-- regenerate: bun scripts/sync-readme.ts (also runs in pre-commit + CI) -->
 
-- [@aihu/css-engine](../css-engine)
-- [@aihu/ui](../ui)
-- [Aihu framework root](../../README.md)
+- [@aihu/signals](https://github.com/aihu-project/aihu-signals)
+- [@aihu/arbor](https://github.com/aihu-project/aihu-arbor)
+- [Aihu framework](https://github.com/aihu-project/aihu)
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: see-also -->
 
@@ -132,8 +132,8 @@ bun add @aihu/primitives
 <!-- BEGIN_AUTOGEN: license -->
 <!-- regenerate: bun scripts/sync-readme.ts (also runs in pre-commit + CI) -->
 
-MIT — see [LICENSE](../../LICENSE).
+MIT — see [LICENSE](./LICENSE).
 
-<sub><i>Auto-generated against `@aihu/primitives@0.2.3`.</i></sub>
+<sub><i>Auto-generated against `@aihu/primitives@0.2.4`.</i></sub>
 
 <!-- END_AUTOGEN: license -->

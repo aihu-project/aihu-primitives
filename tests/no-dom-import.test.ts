@@ -43,7 +43,7 @@
 import { describe, expect, it } from 'vitest'
 
 /**
- * Every subpath in `packages/primitives/package.json#exports`, as its SOURCE
+ * Every subpath in `package.json#exports`, as its SOURCE
  * module. Kept as a literal list rather than derived from `exports`: the point
  * is that adding a primitive is a deliberate act that should also add a row
  * here, and a self-deriving list cannot fail when the package grows.

@@ -217,7 +217,7 @@ export class AihuTooltipContent extends HTMLElementBase {
     this.disposers = []
   }
 
-  /** Position against the trigger using the REUSED css-engine shim. */
+  /** Position against the trigger using Arbor's dependency-free utility. */
   private _position(): void {
     const anchor = this.ctx.triggerEl()
     if (!anchor) return

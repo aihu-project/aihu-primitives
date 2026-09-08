@@ -5,7 +5,7 @@
  * focus trap, and `open-change` on user-driven changes only.
  *
  * Plus the positioning-REUSE assertion: popover imports `position` from
- * @aihu/css-engine/runtime/progressive and contains no positioning math, and
+ * @aihu/arbor/progressive and contains no positioning math, and
  * the source-level assertion that it never creates a focus trap.
  */
 import { readFileSync } from 'node:fs'
@@ -170,20 +170,14 @@ describe('ARIA conformance — Popover (non-modal disclosure)', () => {
   })
 
   it('REUSES the core position() utility (no reimplemented positioning math)', () => {
-    const src = readFileSync(
-      join(process.cwd(), 'packages/primitives/src/popover/index.ts'),
-      'utf8',
-    )
+    const src = readFileSync(join(process.cwd(), 'src/popover/index.ts'), 'utf8')
     expect(src).toMatch(/import\s*\{[^}]*\bposition\b[^}]*\}\s*from\s*'@aihu\/arbor\/progressive'/)
     expect(src).toMatch(/position\(\s*anchor\s*,\s*this/)
     expect(src).not.toMatch(/getBoundingClientRect/)
   })
 
   it('does NOT trap focus — the source never touches the focus trap', () => {
-    const src = readFileSync(
-      join(process.cwd(), 'packages/primitives/src/popover/index.ts'),
-      'utf8',
-    )
+    const src = readFileSync(join(process.cwd(), 'src/popover/index.ts'), 'utf8')
     // No import of, and no call into, the repo's single focus-trap
     // implementation. (`aria-modal` appears only in prose here, hence the
     // runtime assertion above rather than a source-level one.)

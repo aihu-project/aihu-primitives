@@ -6,7 +6,7 @@
  *   - tooltip is NOT focusable
  *   - Escape dismisses
  * Plus the positioning-REUSE assertion: the tooltip source imports `position`
- * from @aihu/css-engine/runtime/progressive and contains no positioning math.
+ * from @aihu/arbor/progressive and contains no positioning math.
  */
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -65,10 +65,7 @@ describe('APG conformance — Tooltip', () => {
 
   it('REUSES the core position() utility (no reimplemented positioning math)', () => {
     // Read the tooltip source from the repo (cwd is the repo root under vitest).
-    const src = readFileSync(
-      join(process.cwd(), 'packages/primitives/src/tooltip/index.ts'),
-      'utf8',
-    )
+    const src = readFileSync(join(process.cwd(), 'src/tooltip/index.ts'), 'utf8')
     // Imports position from the progressive shim.
     expect(src).toMatch(/import\s*\{[^}]*\bposition\b[^}]*\}\s*from\s*'@aihu\/arbor\/progressive'/)
     // Calls the shim.

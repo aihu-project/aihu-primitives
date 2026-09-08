@@ -2,10 +2,8 @@
 language: typescript
 layer: library
 
-# primitives imports @aihu/signals and @aihu/arbor. Declare the project deps
-# so Moon's `^:build` builds those packages' dist + .d.ts BEFORE
-# primitives typecheck — same rationale as css-engine's compiler dep.
-dependsOn:
+# This package is standalone. Its published @aihu/signals and @aihu/arbor
+# dependencies are installed from npm before typecheck/build in CI.
 tasks:
   build:
     command: "bunx rolldown -c"
@@ -18,12 +16,13 @@ tasks:
     options:
       mergeArgs: "replace"
 
-  # typecheck is inherited from .moon/tasks/tasks.yml ("bunx tsc --noEmit" with
-  # deps: ["^:build"]). Do NOT override the command here: without
-  # options.mergeArgs: replace, Moon merges the inherited args into
-  # `tsc --noEmit --noEmit tsc` and the stray `tsc` is read as a file (TS6231).
-  # Inheriting keeps the `^:build` dep so typecheck never races the upstream
-  # build of signals/arbor/css-engine.
+  typecheck:
+    command: "bunx tsc --noEmit"
+    inputs:
+      - "src/**/*.ts"
+      - "tests/**/*"
+    deps:
+      - "~:build"
 
   test:
     command: "bunx vitest run"

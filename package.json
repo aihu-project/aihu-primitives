@@ -1,6 +1,6 @@
 {
   "name": "@aihu/primitives",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
@@ -102,20 +102,28 @@
     "build": "rolldown -c",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "bun run build",
+    "check:version": "bun scripts/check-release-version.ts",
+    "check:pack": "bun scripts/check-packed-manifest.ts"
   },
   "description": "aihu headless behavior primitives \u2014 WAI-ARIA APG patterns as vanilla custom elements, zero CSS.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aihu-project/aihu.git",
-    "directory": "packages/primitives"
+    "url": "git+https://github.com/aihu-project/aihu-primitives.git"
   },
-  "homepage": "https://github.com/aihu-project/aihu/tree/main/packages/primitives#readme",
-  "bugs": "https://github.com/aihu-project/aihu/issues",
+  "homepage": "https://github.com/aihu-project/aihu-primitives#readme",
+  "bugs": "https://github.com/aihu-project/aihu-primitives/issues",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "storybook": "^10.4.3"
+    "@biomejs/biome": "2.4.14",
+    "@types/node": "^20.16.5",
+    "jsdom": "^25.0.1",
+    "rolldown": "^1.0.0-rc.17",
+    "rolldown-plugin-dts": "^0.23.2",
+    "storybook": "^10.4.3",
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.6"
   }
 }

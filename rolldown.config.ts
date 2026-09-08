@@ -5,7 +5,7 @@ export default defineConfig({
   // Multi-entry: one key per primitive (+ the shared dom-context util). Each
   // lowers to its own `dist/<name>.js` so every primitive gets an independent
   // `.size-limit.json` row that tree-shakes on its own (the same pattern
-  // css-engine uses for runtime/cn + runtime/progressive). The per-primitive,
+  // the other aihu packages use for independently tree-shaken entries). The per-primitive,
   // under-4-KB budget is the contract — NOT one bundled row.
   input: {
     index: 'src/index.ts',
