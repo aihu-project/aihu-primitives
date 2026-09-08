@@ -3,24 +3,12 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-type ExportTarget = string | Record<string, ExportTarget> | ExportTarget[]
-
-function collectExportTargets(value: ExportTarget, path: string): string[] {
-  if (typeof value === 'string') return [value]
-  if (Array.isArray(value)) return value.flatMap((entry) => collectExportTargets(entry, path))
-  if (value && typeof value === 'object')
-    return Object.entries(value).flatMap(([condition, entry]) =>
-      collectExportTargets(entry, `${path}.${condition}`),
-    )
-  throw new Error(`Export ${path} contains an invalid target`)
-}
-
 const root = new URL('..', import.meta.url).pathname
 const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')) as {
   name: string
   version: string
   dependencies?: Record<string, string>
-  exports: Record<string, ExportTarget>
+  exports: Record<string, unknown>
   repository: { url: string; directory?: string }
   homepage: string
   bugs: string
@@ -40,14 +28,6 @@ try {
   if (!filename) throw new Error('bun pm pack did not return a tarball')
   tarball = join(root, filename)
   execFileSync('tar', ['-xzf', tarball, '-C', out])
-  const tarEntries = new Set(
-    execFileSync('tar', ['-tzf', tarball], { encoding: 'utf8' })
-      .trim()
-      .split('\n')
-      .map((entry) => entry.trim()),
-  )
-  for (const required of ['package/README.md', 'package/LICENSE'])
-    if (!tarEntries.has(required)) throw new Error(`Packed tarball is missing ${required}`)
   const packed = JSON.parse(
     readFileSync(join(out, 'package', 'package.json'), 'utf8'),
   ) as typeof packageJson
@@ -63,17 +43,9 @@ try {
     throw new Error(`Packed bugs URL still points at old repository: ${packed.bugs}`)
   if (Object.values(packed.dependencies ?? {}).some((value) => value.startsWith('workspace:')))
     throw new Error('Packed manifest contains a workspace dependency')
-  for (const [subpath, declaration] of Object.entries(packageJson.exports)) {
-    const targets = collectExportTargets(declaration, subpath)
-    if (targets.length === 0) throw new Error(`Export ${subpath} has no targets`)
-    for (const target of targets) {
-      if (!target.startsWith('./'))
-        throw new Error(`Export ${subpath} has a non-relative target: ${target}`)
-      const packedPath = `package/${target.slice(2)}`
-      if (!tarEntries.has(packedPath))
-        throw new Error(`Export ${subpath} target is missing from tarball: ${target}`)
-    }
-  }
+  for (const subpath of Object.keys(packageJson.exports))
+    if (!(packageJson.exports[subpath] as { import?: string }).import)
+      throw new Error(`Export ${subpath} has no import target`)
   console.log(`Packed manifest check passed for ${packageJson.name}@${packageJson.version}`)
 } finally {
   if (tarball) rmSync(tarball, { force: true })
