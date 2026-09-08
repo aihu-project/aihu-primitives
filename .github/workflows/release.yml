@@ -14,16 +14,16 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: '1.3.0'
+          bun-version: '1.3.14'
       - uses: actions/setup-node@v4
         with:
-          node-version: '24.8.0'
+          node-version: '22.14.0'
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -31,6 +31,7 @@ jobs:
         run: bun run check:version
       - name: Verify package
         run: |
+          bun run lint
           bun run typecheck
           bun run test
           bun run build
@@ -44,9 +45,19 @@ jobs:
             echo '::error::NPM_TOKEN is required; refusing to publish.'
             exit 1
           fi
+          npm whoami --registry=https://registry.npmjs.org >/dev/null
           version=$(node -p "require('./package.json').version")
-          if npm view "@aihu/primitives@$version" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
+          lookup_log=$(mktemp)
+          trap 'rm "$lookup_log"' EXIT
+          lookup_rc=0
+          npm view "@aihu/primitives@$version" version --registry=https://registry.npmjs.org >"$lookup_log" 2>&1 || lookup_rc=$?
+          if [ "$lookup_rc" -eq 0 ]; then
             echo '::notice::This package version is already published; release is idempotently complete.'
             exit 0
+          fi
+          if ! grep -Eq '(^|[[:space:]])E404([[:space:]]|$)' "$lookup_log"; then
+            cat "$lookup_log"
+            echo '::error::NPM version lookup failed without a confirmed E404; refusing to publish.'
+            exit "$lookup_rc"
           fi
           npm publish --access public --provenance
