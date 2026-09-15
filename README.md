@@ -27,6 +27,16 @@ native DOM APIs; cross-component coordination uses a self-contained DOM-walk con
 | `@aihu/primitives/dialog` | dialog-root + pieces (focus-trap, return-focus, escape) — APG Dialog Modal |
 | `@aihu/primitives/tooltip` | tooltip-root + pieces (reuses Arbor's dependency-free `position()` utility) — APG Tooltip |
 | `@aihu/primitives/button` | headless button base (ARIA/keyboard/toggle/disabled) — APG Button |
+| `@aihu/primitives/focus-trap` | standalone `createFocusTrap()` factory (also re-exported from `dialog`); its own entry so `@aihu/runtime`'s `<focusTrap>` adapter doesn't pull in the whole dialog primitive |
+| `@aihu/primitives/separator` | static, non-focusable divider — APG Separator |
+| `@aihu/primitives/label` | label↔control association + click/focus forwarding (Radix Label parity; no APG pattern) |
+| `@aihu/primitives/input` | headless single-line text control — native `<input>` handoff |
+| `@aihu/primitives/textarea` | headless multi-line text control — native `<textarea>` handoff |
+| `@aihu/primitives/checkbox` | tri-state checkbox root + indicator — APG Checkbox |
+| `@aihu/primitives/switch` | binary on/off switch root + thumb — APG Switch |
+| `@aihu/primitives/radio-group` | roving-focus radio group (extends `roving-focus`) — APG Radio Group |
+| `@aihu/primitives/slider` | single-thumb range slider — APG Slider |
+| `@aihu/primitives/popover` | non-modal disclosure overlay — Disclosure-pattern trigger + Dialog-role panel (no `aria-modal`) |
 
 ### Local development
 
